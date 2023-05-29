@@ -76,14 +76,11 @@ def parse():
             else:
                 gran = gran / 10
             product_page_mass = []
-            # product_page_mass = soup_product_page.find_all("a", class_="btn btn-sm btn-block more-info btn-grey")
 
-            # flag = True
             pagenum = 1
             while (pagenum <= gran):
                 dop_site_product_page = requests.get(
                     mass_podkategory_page[i_product] + f'?pagenum={str(pagenum)}&resultsPerPage=10')
-                # if(dop_site_product_page.ok):
                 dop_soup_product_page = BeautifulSoup(dop_site_product_page.text, 'html.parser')
                 dop_product_page_mass = dop_soup_product_page.find_all("a",
                                                                        class_="btn btn-sm btn-block more-info btn-grey")
@@ -91,14 +88,10 @@ def parse():
 
                 for znak in dop_product_page_mass:
                     if 'More Information' == znak.text:
-                        # print(znak)
                         new_dop_product_page_mass.append(znak)
-                # print(pagenum, ' ', new_dop_product_page_mass)
+                        
                 product_page_mass += new_dop_product_page_mass
                 pagenum += 1
-                # else:
-                #     flag = False
-            # print('Ебать вышли, ахуеть, фух!' + '\n', product_page_mass)
             for i_prod in range(0, len(product_page_mass)):
                 product_page_mass[i_prod] = str(product_page_mass[i_prod])[
                                             str(product_page_mass[i_prod]).find('href="') + 6:str(
@@ -106,10 +99,6 @@ def parse():
                                                 product_page_mass[i_prod]).find('href="') + 6)]
                 if (product_page_mass[i_prod][0:3] == '/sg'):
                     product_page_mass[i_prod] = 'https://www.norgren.com' + product_page_mass[i_prod]
-            # if (product_page_mass[-1] == 'ass='):
-            # #     del product_page_mass[-1]
-            # print('Ебать мы обработали!' + '\n', product_page_mass)
-            # print(len(product_page_mass))
             os.makedirs(f"norgren\{name_dir_1}\{name_dir_2}")
             os.makedirs(f"norgren\{name_dir_1}\{name_dir_2}\photo")
             os.makedirs(f"norgren\{name_dir_1}\{name_dir_2}\photo\cropped")
@@ -119,20 +108,3 @@ def parse():
 
 parse()
 
-    # for i_product in range(0, len(mass_podkategory_page)):
-    #     musor = mass_podkategory_page[i_product].split("/")[-1].split('-')
-    #     name_dir_2 = ''
-    #     for j in musor:
-    #         if (j != musor[-1]):
-    #             name_dir_2 += j + '-'
-    #         else:
-    #             name_dir_2 += j
-    #     if(name_dir_2.find("?")!= -1):
-    #         name_dir_2 = name_dir_2.replace("?page=list&amp;", "-")
-    #     #os.makedirs(f"norgen\{translator.translate(name_dir_1, 'Russian')}\{translator.translate(name_dir_2, 'Russian')}")
-    #     os.makedirs(f"norgen\{name_dir_1}\{name_dir_2}")
-        #print(name_dir_1 + '\\'+ name_dir_2)
-                    # site_product_page = requests.get(mass_podkategory_page[i_product])
-                    # soup_product_page = BeautifulSoup(site_product_page.text, 'html.parser')
-                    # product_page_mass = soup_product_page.find_all("a", class_="btn btn-sm btn-block more-info btn-grey")
-                    # print(product_page_mass)
